@@ -8,7 +8,6 @@
   <% @breweries.each do |brewery| %>
     <div id="<%= dom_id brewery %>">
       <p>
-        <strong>Name:</strong>
         <%= link_to brewery.name, brewery %>
       </p>
     
