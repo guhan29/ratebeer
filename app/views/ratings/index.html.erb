@@ -2,9 +2,10 @@
 
 <ul>
  <% @ratings.each do |rating| %>
-    <li id="dom_id brewery"> 
-      <%= render rating %> <%= button_to 'delete', rating, method: :delete, form: { data: { turbo_confirm: "Are you sure to delete the rating for #{rating.beer.name}?" } } %>
-    </li>
+   <li>
+    <%= "#{rating.beer.name} #{rating.score}" %>
+    <%= button_to 'delete', rating, method: :delete, form: { data: { 'turbo-confirm': 'Are you sure?' } } %> 
+   </li>
  <% end %>
 </ul>
 
