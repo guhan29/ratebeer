@@ -4,8 +4,22 @@
 <h1>Username:</h1>
 <p><%= @user.username %></p>
 
+<p>Has made <%= pluralize(@user.ratings.count, 'rating') %>, average rating <%= @user.average_rating %></p>
+
+
+<% if !@user.beer_clubs.empty? %>
+  <h4>member of</h4>
+
+  <ul>
+   <% @user.beer_clubs.each do |beer_club| %>
+     <li>
+      <%= link_to beer_club %> 
+     </li>
+   <% end %>
+  </ul>
+<% end %>
+
 <% if not @user.ratings.empty? %>
-  <p>Has made <%= pluralize(@user.ratings.count, 'rating') %>, average rating <%= @user.average_rating %></p>
 
   <h4>ratings</h4>
 
