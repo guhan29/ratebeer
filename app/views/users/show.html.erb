@@ -1,46 +1,44 @@
 <p style="color: green"><%= notice %></p>
 
+<h2><%= @user.username %></h2>
 
-<h1>Username:</h1>
-<p><%= @user.username %></p>
-
-<p>Has made <%= pluralize(@user.ratings.count, 'rating') %>, average rating <%= @user.average_rating %></p>
-
-
-<% if !@user.beer_clubs.empty? %>
-  <h4>member of</h4>
+<% if @user.beer_clubs.empty? %>
+  Has not joined any club
+<% else %>
+  <h4>memberships</h4>
 
   <ul>
-   <% @user.beer_clubs.each do |beer_club| %>
-     <li>
-      <%= link_to beer_club %> 
-     </li>
-   <% end %>
+    <% @user.beer_clubs.each do |club| %>
+      <li>
+        <%= link_to club.name, club %>
+      </il>
+    <% end %>
   </ul>
 <% end %>
 
-<% if not @user.ratings.empty? %>
+<% if @user.ratings.empty? %>
+  Has not yet made ratings
+<% else %>
+  Has made <%= pluralize(@user.ratings.count, 'rating') %> with an average of <%= @user.average_rating %>
 
   <h4>ratings</h4>
 
   <ul>
     <% @user.ratings.each do |rating| %>
-      <li><%= "#{rating.to_s}" %>
+      <li>
+        <%= "#{rating.score} #{rating.beer.name}" %>
         <% if @user == current_user %>
-          <%= link_to "Delete", rating, data: {turbo_method: :delete} %>
+          <%= button_to 'delete', rating, method: :delete, form: { style: 'display:inline-block;',  data: { 'turbo-confirm': 'Are you sure?' } } %>
         <% end %>
-      </li>
+      </il>
     <% end %>
   </ul>
 <% end %>
 
-<div>
-  <% if @user == current_user %>
+<% if @user == current_user %>
+  <div>
+    <%= link_to "Change password", edit_user_path(@user) %> |
 
-    <%= link_to "Edit this user", edit_user_path(@user) %>
-  
     <%= button_to "Destroy this user", @user, method: :delete %>
-  <% end %>
-
-  <%= link_to "Back to users", users_path %>
-</div>
+  </div>
+<% end %>
