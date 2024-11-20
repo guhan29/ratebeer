@@ -12,7 +12,7 @@ class MembershipsController < ApplicationController
 
   # GET /memberships/new
   def new
-    @beer_clubs = BeerClub.all
+    @beer_clubs = BeerClub.excluding(current_user.beer_clubs).all
     @membership = Membership.new
   end
 
@@ -30,7 +30,7 @@ class MembershipsController < ApplicationController
         format.html { redirect_to @membership.beer_club, notice: "Membership was successfully created." }
         format.json { render :show, status: :created, location: @membership }
       else
-        @beer_clubs = BeerClub.all
+        @beer_clubs = BeerClub.excluding(current_user.beer_clubs).all
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @membership.errors, status: :unprocessable_entity }
       end
